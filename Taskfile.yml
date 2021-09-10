@@ -1,0 +1,36 @@
+# https://taskfile.dev
+
+version: '3'
+
+silent: true
+
+tasks:
+  default:
+    cmds:
+      - task -l
+
+  test:
+    desc: Run tests
+    cmds:
+      - echo "- Running tests"
+      - go test -v -race -cpu=1,2,4 ./...
+
+  lint:
+    desc: Run golangci-lint
+    cmds:
+      - echo "- Running linter"
+      - golangci-lint run
+
+  format:
+    desc: Format code
+    cmds:
+      - echo "- Formatting code"
+      - go fmt ./...
+      - gci -w -local github.com/IlyaFloppy/observable .
+
+  check:
+    desc: Check
+    cmds:
+      - task: format
+      - task: lint
+      - task: test
