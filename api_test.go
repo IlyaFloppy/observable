@@ -14,7 +14,7 @@ func TestAPI(t *testing.T) {
 	defer cancel()
 
 	obj := observable.New[string]("initial")
-	require.Equal(t, "initial", obj.Value())
+	require.Equal(t, "initial", obj.Get())
 
 	ch := obj.Subscribe(ctx, true)
 	var results []string
@@ -31,9 +31,9 @@ func TestAPI(t *testing.T) {
 		}
 	}()
 
-	obj.Update("value")
-	obj.Update("is")
-	obj.Update("updated")
+	obj.Set("value")
+	obj.Set("is")
+	obj.Set("updated")
 
 	<-done
 	cancel()

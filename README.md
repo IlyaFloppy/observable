@@ -3,9 +3,10 @@
 This package solves the problem of broadcasting data from multiple publishers to multiple observers.
 This package requires go 1.18.
 
-- Create observable value with `observable.New[type](value)`
-- Subscribe for changes with `obj.Subscribe(ctx, sendCurrent)`
-- Broadcast new value with `obj.Update(newValue)`
+- `go get github.com/IlyaFloppy/observable`
+- Create observable object with `obj := observable.New[type](value)`
+- Subscribe for changes with `ch := obj.Subscribe(ctx, sendCurrent)`
+- Broadcast new value with `obj.Set(newValue)`
 # Example
 
 ```golang
@@ -25,9 +26,9 @@ go func() {
     }
 }()
 
-obj.Update("value")
-obj.Update("is")
-obj.Update("updated")
+obj.Set("value")
+obj.Set("is")
+obj.Set("updated")
 
 wg.Wait()
 cancel()

@@ -10,14 +10,14 @@ type Object[T any] struct {
 	state *state[T]
 }
 
-func (o *Object[T]) Value() T {
+func (o *Object[T]) Get() T {
 	o.lock.Lock()
 	defer o.lock.Unlock()
 
 	return o.state.value
 }
 
-func (o *Object[T]) Update(value T) {
+func (o *Object[T]) Set(value T) {
 	o.lock.Lock()
 	defer o.lock.Unlock()
 
