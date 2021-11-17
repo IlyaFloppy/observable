@@ -16,7 +16,7 @@ func TestAPI(t *testing.T) {
 	obj := observable.New[string]("initial")
 	require.Equal(t, "initial", obj.Get())
 
-	ch := obj.Subscribe(ctx, true)
+	ch := obj.Subscribe(ctx, observable.WithSendCurrent(true))
 	var results []string
 
 	// not using WaitGroup to make sure test passes without "sync" import

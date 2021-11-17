@@ -24,17 +24,22 @@ func (o *Object[T]) Set(value T) {
 	o.state = o.state.update(value)
 }
 
-func (o *Object[T]) Subscribe(ctx context.Context, sendCurrent bool) <-chan T {
+func (o *Object[T]) Subscribe(ctx context.Context, options ...Option) <-chan T {
 	o.lock.Lock()
 	defer o.lock.Unlock()
 
+	p := params{}
+	for _, opt := range options {
+		p = opt(p)
+	}
+
 	s := o.state
-	ch := make(chan T)
+	ch := make(chan T, p.bufferSize)
 
 	go func() {
 		defer close(ch)
 
-		if sendCurrent {
+		if p.sendCurrent {
 			select {
 			case <-ctx.Done():
 				return

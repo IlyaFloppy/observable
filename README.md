@@ -14,7 +14,7 @@ ctx, cancel := context.WithCancel(context.Background())
 defer cancel()
 
 obj := observable.New[string]("initial")
-ch := obj.Subscribe(ctx, true)
+ch := obj.Subscribe(ctx, observable.WithSendCurrent(true))
 var results []string
 
 var wg sync.WaitGroup
