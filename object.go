@@ -65,3 +65,9 @@ func (o *Object[T]) Subscribe(ctx context.Context, options ...Option) <-chan T {
 
 	return ch
 }
+
+func (o *Object[T]) Stream() Stream[T] {
+	return Stream[T]{
+		state: o.state,
+	}
+}
