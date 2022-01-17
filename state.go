@@ -16,5 +16,6 @@ func newState[T any](value T) *state[T] {
 func (s *state[T]) update(value T) *state[T] {
 	s.next = newState(value)
 	close(s.done)
+
 	return s.next
 }

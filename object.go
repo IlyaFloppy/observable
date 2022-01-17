@@ -5,11 +5,18 @@ import (
 	"sync"
 )
 
+// New creates a new observable object.
+func New[T any](value T) *Object[T] {
+	return &Object[T]{state: newState(value)}
+}
+
+// Object is a wrapper for any value that allows subscribing for it's changes.
 type Object[T any] struct {
 	lock  sync.Mutex
 	state *state[T]
 }
 
+// Get returns current value of an object.
 func (o *Object[T]) Get() T {
 	o.lock.Lock()
 	defer o.lock.Unlock()
@@ -17,6 +24,7 @@ func (o *Object[T]) Get() T {
 	return o.state.value
 }
 
+// Set sets current value of an object.
 func (o *Object[T]) Set(value T) {
 	o.lock.Lock()
 	defer o.lock.Unlock()
@@ -24,6 +32,7 @@ func (o *Object[T]) Set(value T) {
 	o.state = o.state.update(value)
 }
 
+// Subscribe returns a channel that is written to when an object is set to a new value.
 func (o *Object[T]) Subscribe(ctx context.Context, options ...Option) <-chan T {
 	o.lock.Lock()
 	defer o.lock.Unlock()
@@ -66,6 +75,7 @@ func (o *Object[T]) Subscribe(ctx context.Context, options ...Option) <-chan T {
 	return ch
 }
 
+// Stream returns a stream of values for the given object.
 func (o *Object[T]) Stream() Stream[T] {
 	return Stream[T]{
 		state: o.state,

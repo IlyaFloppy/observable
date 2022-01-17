@@ -1,5 +1,6 @@
 package observable
 
+// Stream is an entity that allows to monitor Object changes without spawning a goroutine unlike Subscribe.
 type Stream[T any] struct {
 	state *state[T]
 }
@@ -9,7 +10,7 @@ func (s *Stream[T]) Value() T {
 	return s.state.value
 }
 
-// Next advances stream. Should not be called unless Changes returns closed channel.
+// Next advances stream. Should not be called unless Changes returns a closed channel.
 func (s *Stream[T]) Next() T {
 	s.state = s.state.next
 

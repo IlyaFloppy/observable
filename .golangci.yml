@@ -1,0 +1,43 @@
+run:
+  timeout: 5m
+  modules-download-mode: readonly
+
+linters:
+  disable-all: true
+  enable:
+    - cyclop
+    - deadcode
+    - decorder
+    - dupl
+    - errcheck
+    - exhaustive
+    - exportloopref
+    - funlen
+    - gci
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - gosec
+    - goimports
+    - govet
+    - importas
+    - ineffassign
+    - lll
+    - nilnil
+    - nolintlint
+    - prealloc
+    - revive
+    - varcheck
+    - whitespace
+    - wrapcheck
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+linters-settings:
+  gci:
+    local-prefixes: github.com/IlyaFloppy/observable
