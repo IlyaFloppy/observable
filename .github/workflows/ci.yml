@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+    branches: [ master ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      GOROOT: /home/runner/sdk/go
+      GOPATH: /home/runner/go
+    steps:
+    - name: Fix PATH
+      run: |
+        echo "/home/runner/sdk/go/bin" >> $GITHUB_PATH
+        echo "/home/runner/go/bin" >> $GITHUB_PATH
+
+    - name: Install Go 1.18
+      run: |
+        curl https://dl.google.com/go/go1.18beta1.linux-amd64.tar.gz -o /home/runner/go.tar.gz
+        mkdir -p /home/runner/sdk/go
+        tar -C /home/runner/sdk -xzf /home/runner/go.tar.gz
+        go version
+        go env
+
+    - name: Install tools
+      run: |
+        go install github.com/go-task/task/v3/cmd/task@latest
+        go install github.com/golangci/golangci-lint/cmd/golangci-lint@master
+
+    - name: Checkout code
+      uses: actions/checkout@master    
+
+    - name: Lint
+      run: task lint
+
+    - name: Test
+      run: task test
