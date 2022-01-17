@@ -5,7 +5,7 @@ This package requires go 1.18.
 
 - `go get github.com/IlyaFloppy/observable`
 - Create observable object with `obj := observable.New[type](value)`
-- Subscribe for changes with `ch := obj.Subscribe(ctx, sendCurrent)`
+- Subscribe for changes with `ch := obj.Subscribe(ctx, options...)`
 - Broadcast new value with `obj.Set(newValue)`
 # Example
 
