@@ -18,7 +18,7 @@ func TestSubscribe(t *testing.T) {
 	obj := observable.New("initial")
 	require.Equal(t, "initial", obj.Get())
 
-	ch := obj.Subscribe(ctx, observable.WithSendCurrent(true))
+	ch := obj.Subscribe(ctx, observable.WithCurrent(true))
 
 	var results []string
 
@@ -48,7 +48,7 @@ func TestSubscribeSendCurrentContext(t *testing.T) {
 			cancel()
 
 			obj := observable.New("initial")
-			ch := obj.Subscribe(ctx, observable.WithSendCurrent(true))
+			ch := obj.Subscribe(ctx, observable.WithCurrent(true))
 
 			if val, ok := <-ch; ok {
 				// select has chosen send branch
@@ -67,7 +67,7 @@ func TestSubscribeContext(t *testing.T) {
 			cancel()
 
 			obj := observable.New("initial")
-			ch := obj.Subscribe(ctx, observable.WithSendCurrent(false))
+			ch := obj.Subscribe(ctx, observable.WithCurrent(false))
 			obj.Set("value")
 
 			if val, ok := <-ch; ok {

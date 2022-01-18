@@ -9,10 +9,10 @@ import (
 func TestWithSendCurrent(t *testing.T) {
 	o := params{}
 
-	require.False(t, o.sendCurrent)
+	require.False(t, o.withCurrent)
 
-	o = WithSendCurrent(true)(o)
-	require.True(t, o.sendCurrent)
+	o = WithCurrent(true)(o)
+	require.True(t, o.withCurrent)
 }
 
 func TestWithBufferSize(t *testing.T) {
@@ -20,6 +20,6 @@ func TestWithBufferSize(t *testing.T) {
 
 	require.Equal(t, 0, o.bufferSize)
 
-	o = WithBufferSize(42)(o)
+	o = WithBuffer(42)(o)
 	require.Equal(t, 42, o.bufferSize)
 }

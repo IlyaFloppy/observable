@@ -48,7 +48,7 @@ func (o *Object[T]) Subscribe(ctx context.Context, options ...Option) <-chan T {
 	go func() {
 		defer close(ch)
 
-		if p.sendCurrent {
+		if p.withCurrent {
 			select {
 			case <-ctx.Done():
 				return

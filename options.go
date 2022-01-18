@@ -1,24 +1,24 @@
 package observable
 
 type params struct {
-	sendCurrent bool
+	withCurrent bool
 	bufferSize  int
 }
 
 // Option is an Option for Object.Subscribe method.
 type Option func(p params) params
 
-// WithSendCurrent makes Subscribe put current Object value into the returned channel when sendCurrent is true.
+// WithCurrent makes Subscribe put current Object value into the returned channel when sendCurrent is true.
 // Only new values that are set after Subscribe will be sent over channel otherwise.
-func WithSendCurrent(sendCurrent bool) Option {
+func WithCurrent(withCurrent bool) Option {
 	return func(p params) params {
-		p.sendCurrent = sendCurrent
+		p.withCurrent = withCurrent
 		return p
 	}
 }
 
-// WithBufferSize specifies channel size.
-func WithBufferSize(bufferSize int) Option {
+// WithBuffer specifies channel buffer size.
+func WithBuffer(bufferSize int) Option {
 	return func(p params) params {
 		p.bufferSize = bufferSize
 		return p
